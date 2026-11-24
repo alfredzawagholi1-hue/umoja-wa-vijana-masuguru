@@ -1,6 +1,132 @@
 <!doctype html>
 <html lang="sw">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#087b45">
+<title>Umoja wa Vijana Masuguru</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--green:#087b45;--deep:#075b36;--yellow:#f4c430;--blue:#087eaa;--ink:#17352a;--muted:#62756c;--bg:#f2f7f4;--line:#dce8e1;--red:#a52d2d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+.hero{background:linear-gradient(120deg,#075b36,#087b45 58%,#087eaa);color:white;padding:34px 16px 28px;text-align:center;border-bottom:6px solid var(--yellow)}
+.brand{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}.logo{width:66px;height:66px;border:4px solid var(--yellow);border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:23px;color:var(--yellow);background:#ffffff14;box-shadow:0 4px 16px #0002}
+.hero h1{font-size:clamp(24px,4vw,38px);margin:0;letter-spacing:.5px}.hero p{margin:8px 0 0;color:#e5f5eb}
+nav{position:sticky;top:0;z-index:10;background:#fff;box-shadow:0 3px 12px #0000000d;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:9px}
+nav a{color:var(--deep);text-decoration:none;font-weight:700;padding:9px 13px;border-radius:22px;font-size:14px}nav a:hover{background:#e7f4ec}
+main{max-width:1120px;margin:26px auto;padding:0 16px}.intro{background:linear-gradient(120deg,#e6f5eb,#e8f5fa);border-left:5px solid var(--yellow);padding:24px;border-radius:16px;margin-bottom:18px}.intro h2{font-size:clamp(23px,3vw,32px);margin:0 0 8px;color:var(--deep)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.card{background:#fff;padding:22px;border-radius:16px;margin:18px 0;box-shadow:0 5px 22px #153c2810;border:1px solid #edf2ee}
+h2{color:var(--green);margin:0 0 14px;font-size:23px}h3{color:var(--deep);margin:8px 0}
+input,select,textarea,button{font:inherit;padding:12px;border:1px solid #ccd8d2;border-radius:9px;margin:5px 0}
+input,select,textarea{width:100%;background:white;color:var(--ink)}textarea{min-height:85px;resize:vertical}
+button{background:var(--green);color:white;border:0;cursor:pointer;padding:11px 16px;font-weight:700}button:hover{filter:brightness(.94)}button:disabled{opacity:.55;cursor:not-allowed}.secondary{background:var(--blue)}.reject{background:var(--red)}.hidden{display:none!important}.muted{color:var(--muted)}.message{padding:11px 13px;border-radius:9px;margin:10px 0}.ok{background:#e4f5e9;color:#145c32}.err{background:#ffeded;color:#8b2020}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 12px}.formgrid .full{grid-column:1/-1}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:12px}table{width:100%;border-collapse:collapse;min-width:720px}th,td{text-align:left;padding:10px;border-bottom:1px solid #e2eae5;vertical-align:top}th{background:#edf5f0;color:var(--deep)}tr:last-child td{border-bottom:0}.status{font-weight:bold}.pending{color:#a36a00}.approved{color:var(--green)}.rejected{color:var(--red)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}.photo{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff}.photo img{width:100%;height:190px;object-fit:cover;display:block;background:#edf2ef}.photo div{padding:12px}.photo h3{margin:0 0 5px}.pill{display:inline-block;background:#e7f4ec;color:var(--deep);border-radius:20px;padding:5px 10px;font-size:13px;font-weight:bold}
+footer{text-align:center;padding:26px 14px;background:#073f29;color:#e9f5ed;margin-top:35px}
+@media(max-width:700px){.grid,.formgrid{grid-template-columns:1fr}.formgrid .full{grid-column:auto}.card{padding:17px}nav{gap:2px}nav a{font-size:13px;padding:8px}.hero{padding:25px 12px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="brand"><div class="logo" aria-label="Nembo ya Umoja">UM</div><div><h1>UMOJA WA VIJANA MASUGURU</h1><p>Umoja • Maendeleo • Uwajibikaji</p></div></div></header>
+<nav><a href="#nyumbani">Nyumbani</a><a href="#kuhusu">Kuhusu Umoja</a><a href="#uanachama">Uanachama</a><a href="#miradi">Miradi na Picha</a><a href="#admin">Admin</a></nav>
+<main>
+<section id="nyumbani" class="intro"><span class="pill">Karibu Masuguru</span><h2>Pamoja tunaweza kujenga maendeleo ya vijana na jamii yetu.</h2><p>Jukwaa la Umoja wa Vijana Masuguru kwa ajili ya kushirikishana taarifa, kuimarisha mshikamano, kuonyesha miradi na kusimamia maendeleo.</p></section>
+<section id="kuhusu" class="card"><h2>Kuhusu Umoja</h2><div class="grid"><div><h3>Dira yetu</h3><p>Kuwa umoja imara unaowaunganisha vijana na kuwahamasisha kushiriki katika maendeleo ya jamii.</p></div><div><h3>Dhamira yetu</h3><p>Kukuza ushirikiano, uwajibikaji, ubunifu na fursa za maendeleo kwa vijana wa Masuguru.</p></div></div></section>
+<section id="uanachama" class="card"><h2>Fomu ya kujiunga na umoja</h2><p class="muted">Jaza taarifa zako kwa usahihi. Maombi yatapitiwa na uongozi kabla ya kuidhinishwa.</p>
+<form id="memberForm" class="formgrid"><input name="full_name" placeholder="Jina kamili" required><select name="gender" required><option value="">Chagua jinsia</option><option>Mwanaume</option><option>Mwanamke</option></select><input name="age" type="number" min="15" placeholder="Umri" required><input name="phone" placeholder="Namba ya simu" required><input name="village" placeholder="Kijiji/Mtaa" required><input name="ward" placeholder="Kata" required><input class="full" name="occupation" placeholder="Kazi/Shughuli unayofanya (si lazima)"><button class="full" type="submit">Tuma maombi ya uanachama</button></form><div id="publicMessage" aria-live="polite"></div></section>
+<section id="miradi" class="card"><h2>Miradi na picha za shughuli</h2><p class="muted">Picha na taarifa za miradi zitakazowekwa na uongozi zitaonekana hapa.</p><div id="publicGallery" class="gallery"><p class="muted">Inapakia picha...</p></div></section>
+<section id="admin" class="card"><h2>Dashibodi ya msimamizi</h2>
+<div id="loginBox"><p class="muted">Sehemu hii inaruhusiwa kwa msimamizi aliyeidhinishwa pekee.</p><input id="email" type="email" placeholder="Barua pepe ya admin" autocomplete="username"><input id="password" type="password" placeholder="Password" autocomplete="current-password"><button id="loginBtn">Ingia</button></div>
+<div id="adminBox" class="hidden"><p id="adminInfo" class="muted">Umeingia kama admin.</p><button id="refreshBtn">Onyesha upya wanachama</button> <button id="logoutBtn" class="reject">Toka</button><div id="adminMessage" aria-live="polite"></div>
+<h3>Maombi yote ya uanachama</h3><div class="tablewrap"><table><thead><tr><th>Jina</th><th>Simu</th><th>Kijiji/Mtaa</th><th>Kata</th><th>Umri</th><th>Hali</th><th>Hatua</th></tr></thead><tbody id="membersRows"></tbody></table></div>
+<div class="grid"><div><h3>Wanachama walioidhinishwa</h3><p class="muted">Pakua orodha hii kama CSV inayofunguka kwenye Excel.</p><button id="csvBtn" class="secondary">Pakua orodha ya wanachama (Excel/CSV)</button><div class="tablewrap"><table><thead><tr><th>Jina</th><th>Simu</th><th>Kijiji/Mtaa</th><th>Kata</th></tr></thead><tbody id="approvedRows"></tbody></table></div></div>
+<div><h3>Ongeza picha ya mradi/shughuli</h3><form id="galleryForm"><input id="photoTitle" placeholder="Kichwa cha picha/mradi" required><textarea id="photoDescription" placeholder="Maelezo mafupi ya picha (si lazima)"></textarea><label for="photoFile"><strong>Chagua picha (JPG, PNG au WEBP; hadi 5MB)</strong></label><input id="photoFile" type="file" accept="image/jpeg,image/png,image/webp" required><button id="uploadBtn" type="submit">Pakia picha</button></form><p class="muted">Picha zitahifadhiwa kwenye hifadhi ya umoja na kuonyeshwa kwenye sehemu ya Miradi na Picha.</p></div></div>
+<h3>Picha zilizowekwa</h3><div id="adminGallery" class="gallery"></div></div></section>
+</main>
+<footer>© <span id="year"></span> Umoja wa Vijana Masuguru • Umoja • Maendeleo • Uwajibikaji</footer>
+<script>
+const SUPABASE_URL = "https://ewujcsafvhxvrsmnylik.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_UPrXut7Q4VB9sqoM9s1RtQ_GIzs4gn_";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const $ = id => document.getElementById(id);
+$("year").textContent = new Date().getFullYear();
+function show(id,msg,kind="ok"){const el=$(id);el.textContent=msg;el.className="message "+kind;}
+function makeCell(value){const td=document.createElement("td");td.textContent=value??"-";return td;}
+function escapeCSV(value){return '"'+String(value??"").replace(/"/g,'""')+'"';}
+
+$("memberForm").addEventListener("submit",async e=>{
+ e.preventDefault();const btn=e.submitter;btn.disabled=true;
+ try{const f=new FormData(e.target);const row=Object.fromEntries(f.entries());row.age=Number(row.age);row.status="pending";
+ const {error}=await db.from("members").insert(row);if(error){show("publicMessage","Imeshindikana kutuma: "+error.message,"err");return;}
+ show("publicMessage","Maombi yako yamepokelewa. Yanasubiri kuhakikiwa na uongozi.");e.target.reset();
+ }catch(err){show("publicMessage","Hitilafu: "+err.message,"err");}finally{btn.disabled=false;}
+});
+async function checkAdmin(){
+ const {data:{user}}=await db.auth.getUser();
+ if(!user){$("loginBox").classList.remove("hidden");$("adminBox").classList.add("hidden");return false;}
+ const {data,error}=await db.from("admin_users").select("user_id").eq("user_id",user.id).maybeSingle();
+ if(error||!data){show("adminMessage","Akaunti hii haina ruhusa ya admin.","err");await db.auth.signOut();return false;}
+ $("loginBox").classList.add("hidden");$("adminBox").classList.remove("hidden");await loadMembers();await loadApproved();await loadGallery(true);return true;
+}
+$("loginBtn").onclick=async()=>{$("loginBtn").disabled=true;const {error}=await db.auth.signInWithPassword({email:$("email").value,password:$("password").value});$("loginBtn").disabled=false;if(error){show("adminMessage","Imeshindikana kuingia: "+error.message,"err");return;}await checkAdmin();};
+async function loadMembers(){
+ $("membersRows").innerHTML="<tr><td colspan='7'>Inapakia...</td></tr>";
+ const {data,error}=await db.from("members").select("*").order("created_at",{ascending:false});
+ if(error){$("membersRows").innerHTML="";show("adminMessage","Imeshindikana kusoma maombi: "+error.message,"err");return;}
+ $("membersRows").innerHTML="";if(!data?.length){$("membersRows").innerHTML="<tr><td colspan='7'>Hakuna maombi kwa sasa.</td></tr>";return;}
+ data.forEach(m=>{const tr=document.createElement("tr");const status=(m.status||"pending").toLowerCase();tr.append(makeCell(m.full_name),makeCell(m.phone),makeCell(m.village),makeCell(m.ward),makeCell(m.age));const st=makeCell(status);st.className="status "+status;tr.append(st);const actions=document.createElement("td");
+ if(status==="pending"){const yes=document.createElement("button");yes.textContent="Approve";yes.onclick=()=>setStatus(m.id,"approved");const no=document.createElement("button");no.textContent="Reject";no.className="reject";no.onclick=()=>setStatus(m.id,"rejected");actions.append(yes,no);}else actions.textContent="Hakuna hatua";tr.append(actions);$("membersRows").append(tr);});
+}
+async function loadApproved(){
+ $("approvedRows").innerHTML="<tr><td colspan='4'>Inapakia...</td></tr>";
+ const {data,error}=await db.from("members").select("full_name,phone,village,ward").eq("status","approved").order("full_name");
+ if(error){$("approvedRows").innerHTML="<tr><td colspan='4'>Imeshindikana kupakia.</td></tr>";show("adminMessage","Orodha ya walioidhinishwa: "+error.message,"err");return;}
+ $("approvedRows").innerHTML="";if(!data?.length){$("approvedRows").innerHTML="<tr><td colspan='4'>Bado hakuna walioidhinishwa.</td></tr>";return;}
+ data.forEach(m=>{const tr=document.createElement("tr");tr.append(makeCell(m.full_name),makeCell(m.phone),makeCell(m.village),makeCell(m.ward));$("approvedRows").append(tr);});
+}
+$("csvBtn").onclick=async()=>{
+ const {data,error}=await db.from("members").select("full_name,gender,age,phone,village,ward,occupation,created_at").eq("status","approved").order("full_name");
+ if(error){show("adminMessage","Imeshindikana kupakua orodha: "+error.message,"err");return;}
+ const headers=["Jina kamili","Jinsia","Umri","Simu","Kijiji/Mtaa","Kata","Shughuli","Tarehe ya kujiunga"],keys=["full_name","gender","age","phone","village","ward","occupation","created_at"];
+ const lines=[headers.map(escapeCSV).join(","),...(data||[]).map(row=>keys.map(k=>escapeCSV(row[k])).join(","))];
+ const blob=new Blob(["\ufeff"+lines.join("\r\n")],{type:"text/csv;charset=utf-8;"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="wanachama_walioidhinishwa.csv";a.click();URL.revokeObjectURL(url);show("adminMessage","Orodha ya wanachama walioidhinishwa imepakuliwa.");
+};
+async function setStatus(id,status){const {error}=await db.from("members").update({status}).eq("id",id);if(error){show("adminMessage","Imeshindikana kubadili hali: "+error.message,"err");return;}show("adminMessage",status==="approved"?"Mwanachama amekubaliwa.":"Maombi yamekataliwa.");await loadMembers();await loadApproved();}
+$("refreshBtn").onclick=async()=>{await loadMembers();await loadApproved();await loadGallery(true);};
+$("logoutBtn").onclick=async()=>{await db.auth.signOut();$("adminBox").classList.add("hidden");$("loginBox").classList.remove("hidden");};
+db.auth.onAuthStateChange((event)=>{if(event==="SIGNED_IN"||event==="SIGNED_OUT")setTimeout(checkAdmin,0);});
+
+function renderGallery(targetId,items){
+ const box=$(targetId);box.innerHTML="";if(!items?.length){box.innerHTML='<p class="muted">Bado hakuna picha zilizowekwa.</p>';return;}
+ items.forEach(item=>{const card=document.createElement("article");card.className="photo";const img=document.createElement("img");img.src=item.image_url||"";img.alt=item.title||"Picha ya mradi";img.loading="lazy";const body=document.createElement("div");const title=document.createElement("h3");title.textContent=item.title||"Picha ya shughuli";const desc=document.createElement("p");desc.textContent=item.description||"";desc.className="muted";body.append(title,desc);card.append(img,body);box.append(card);});
+}
+async function loadGallery(isAdmin=false){
+ const {data,error}=await db.from("gallery").select("*").order("created_at",{ascending:false});
+ if(error){$("publicGallery").innerHTML='<p class="muted">Picha hazijaweza kupakiwa kwa sasa.</p>';if(isAdmin)show("adminMessage","Picha: "+error.message,"err");return;}
+ renderGallery("publicGallery",data||[]);if(isAdmin)renderGallery("adminGallery",data||[]);
+}
+$("galleryForm").addEventListener("submit",async e=>{
+ e.preventDefault();const btn=$("uploadBtn");btn.disabled=true;let uploadedPath=null;
+ try{
+  const file=$("photoFile").files[0],title=$("photoTitle").value.trim(),description=$("photoDescription").value.trim();
+  if(!file){show("adminMessage","Tafadhali chagua picha.","err");return;}
+  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){show("adminMessage","Tumia picha ya JPG, PNG au WEBP.","err");return;}
+  if(file.size>5*1024*1024){show("adminMessage","Picha imezidi 5MB. Tafadhali chagua picha ndogo.","err");return;}
+  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");uploadedPath=Date.now()+"_"+safeName;
+  const {error:uploadError}=await db.storage.from("umoja-gallery").upload(uploadedPath,file,{contentType:file.type,upsert:false});if(uploadError)throw uploadError;
+  const {data:publicData}=db.storage.from("umoja-gallery").getPublicUrl(uploadedPath);
+  const {error:insertError}=await db.from("gallery").insert({title,description,image_url:publicData.publicUrl,is_published:true});
+  if(insertError){await db.storage.from("umoja-gallery").remove([uploadedPath]);throw insertError;}
+  show("adminMessage","Picha imepakiwa na kuhifadhiwa kwenye gallery.");e.target.reset();await loadGallery(true);
+ }catch(err){show("adminMessage","Imeshindikana kupakia picha: "+(err.message||"Hitilafu isiyojulikana"),"err");}finally{btn.disabled=false;}
+});
+loadGallery(false);checkAdmin();
+</script>
+</body>
+</html><!doctype html>
+<html lang="sw">
+<head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Umoja wa Vijana Masuguru</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
